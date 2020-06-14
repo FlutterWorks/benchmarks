@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:benckmark/item.dart';
 import 'package:provider/provider.dart';
 
 import '_state.dart';
@@ -21,7 +19,7 @@ class App extends StatelessWidget {
   }
 }
 
-class Page extends StatefulWidget {
+class Page extends StatelessWidget {
   Page({
     Key key,
     this.title,
@@ -30,28 +28,10 @@ class Page extends StatefulWidget {
   final String title;
 
   @override
-  _PageState createState() => _PageState();
-}
-
-class _PageState extends State<Page> {
-  @override
-  void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(Duration(milliseconds: 500));
-        final state = Provider.of<AppState>(context, listen: false);
-        state.addItem(Item(title: DateTime.now().toString()));
-      }
-      print("It's done. Print now!");
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: ListViewWidget(),
     );
@@ -61,16 +41,14 @@ class _PageState extends State<Page> {
 class ListViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppState>(
-      builder: (context, state, child) {
-        return ListView.builder(
-          padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
-          itemCount: state.items.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(state.items[index].title),
-            );
-          },
+    final state = context.watch<AppState>();
+
+    return ListView.builder(
+      padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+      itemCount: state.items.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(state.items[index].title),
         );
       },
     );
