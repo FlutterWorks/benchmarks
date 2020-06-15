@@ -2,6 +2,9 @@ import 'package:benckmark/item.dart';
 import 'package:get/get.dart';
 
 class Controller extends RxController {
+  Controller() {
+    onInit();
+  }
   final items = sampleItems.obs;
 
   @override

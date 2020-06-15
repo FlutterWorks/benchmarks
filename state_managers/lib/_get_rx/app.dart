@@ -15,9 +15,7 @@ class App extends StatelessWidget {
   }
 }
 
-Controller c = Controller();
-
-class Page extends StatefulWidget {
+class Page extends StatelessWidget {
   Page({
     Key key,
     this.title,
@@ -26,21 +24,10 @@ class Page extends StatefulWidget {
   final String title;
 
   @override
-  _PageState createState() => _PageState();
-}
-
-class _PageState extends State<Page> {
-  @override
-  void initState() {
-    c.onInit();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("GetX"),
       ),
       body: ListViewWidget(),
     );
@@ -48,6 +35,7 @@ class _PageState extends State<Page> {
 }
 
 class ListViewWidget extends StatelessWidget {
+  final Controller c = Controller();
   @override
   Widget build(BuildContext context) {
     return Obxx(() => ListView.builder(

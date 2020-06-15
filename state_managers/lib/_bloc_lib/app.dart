@@ -10,7 +10,7 @@ class App extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       home: BlocProvider(
         create: (_) => ItemsBloc(),
-        child: const Page(title: 'BLoC Lib Sample'),
+        child: Page(title: 'BLoC Lib Sample'),
       ),
     );
   }
